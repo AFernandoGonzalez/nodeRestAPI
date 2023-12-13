@@ -1,6 +1,7 @@
 import express from "express";
 import dotenv from "dotenv";
 import bodyParser from "body-parser";
+// eslint-disable-next-line import/no-extraneous-dependencies
 import rateLimit from "express-rate-limit";
 import bookRoute from "./src/routes/bookRoute.js";
 import userRouter from "./src/routes/userRoute.js";
@@ -19,8 +20,6 @@ const apiLimiter = rateLimit({
   message: "Too many requests from this IP, please try again in 15 minutes!"
 });
 
-const PORT = process.env.PORT || 8000;
-
 app.get("/", (req, res) => {
   res.send("My Rest API");
 });
@@ -28,6 +27,10 @@ app.get("/", (req, res) => {
 app.use("/api", apiLimiter, bookRoute);
 app.use("/api/auth", userRouter);
 
-app.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}`);
-});
+// const PORT = process.env.PORT || 8000;
+
+// app.listen(PORT, () => {
+//   console.log(`Server is running on port ${PORT}`);
+// });
+
+export default app;
