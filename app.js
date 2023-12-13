@@ -3,6 +3,7 @@ const dotenv = require("dotenv");
 const bodyParser = require("body-parser");
 const rateLimit = require("express-rate-limit");
 const bookRoute = require("./src/routes/bookRoute");
+const userRouter = require("./src/routes/userRoute");
 const connectDB = require("./src/db/db");
 
 dotenv.config();
@@ -25,6 +26,7 @@ app.get("/", (req, res) => {
 });
 
 app.use("/api", apiLimiter, bookRoute);
+app.use("/api/auth", userRouter);
 
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
