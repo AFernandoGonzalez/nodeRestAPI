@@ -21,7 +21,8 @@ const apiLimiter = rateLimit({
 });
 
 app.get("/", (req, res) => {
-  res.send("My Rest API");
+  const welcomeMessage = `Welcome to My Rest API! Explore our books at <a href="${process.env.BASE_URL}/api/books">/api/books</a>`;
+  res.send(welcomeMessage);
 });
 
 app.use("/api", apiLimiter, bookRoute);
