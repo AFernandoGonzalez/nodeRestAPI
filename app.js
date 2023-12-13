@@ -1,10 +1,10 @@
 import express from "express";
 import dotenv from "dotenv";
 import bodyParser from "body-parser";
-import rateLimit from "express-rate-limit";
 import bookRoute from "./src/routes/bookRoute.js";
 import userRouter from "./src/routes/userRoute.js";
 import connectDB from "./src/db/db.js";
+import { RateLimiter } from "https://deno.land/x/oak_rate_limit/mod.ts";
 
 dotenv.config();
 
@@ -13,10 +13,12 @@ connectDB();
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-const apiLimiter = rateLimit({
+const apiLimiter = RateLimiter({
   windowMs: 15 * 60 * 1000,
   max: 100,
-  message: "Too many requests from this IP, please try again in 15 minutes!"
+  headers: true,
+  message: "Too many requests, please try again in 15 minutes.",
+  statusCode: 429, // Default status code if rate limit reached.
 });
 
 const PORT = process.env.PORT || 8000;
