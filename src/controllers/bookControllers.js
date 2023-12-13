@@ -10,7 +10,16 @@ const getBooks = async (req, res) => {
     } else {
       books = await Book.find();
     }
-    return res.status(200).json(books);
+
+    // Adding HATEOAS
+    const bookWithLinks = books.map((book) => {
+      const newBook = book.toJSON();
+      newBook.links = {};
+      newBook.links.self = `http://${req.headers.host}/api/book/${book._id}`;
+      return newBook;
+    });
+
+    return res.status(200).json(bookWithLinks);
   } catch (error) {
     console.log(error);
     return res.status(500).json({ error: "Something went wrong" });
