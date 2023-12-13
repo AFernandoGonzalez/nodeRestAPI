@@ -12,14 +12,14 @@ const getBooks = async (req, res) => {
     }
 
     // Adding HATEOAS
-    const bookWithLinks = books.map((book) => {
+    const returnBook = books.map((book) => {
       const newBook = book.toJSON();
       newBook.links = {};
       newBook.links.self = `http://${req.headers.host}/api/book/${book._id}`;
       return newBook;
     });
 
-    return res.status(200).json(bookWithLinks);
+    return res.status(200).json(returnBook);
   } catch (error) {
     console.log(error);
     return res.status(500).json({ error: "Something went wrong" });
@@ -30,7 +30,13 @@ const getBookById = async (req, res) => {
   const { bookId } = req;
   try {
     const book = await Book.findById(bookId);
-    return res.status(200).json(book);
+
+    // Adding HATEOAS
+    const returnBook = book.toJSON();
+    returnBook.links = {};
+    returnBook.links.FilterByThisGenre = `http://${req.headers.host}/api/books?genre=${book.genre.replace(" ", "%20")}`;
+
+    return res.status(200).json(returnBook);
   } catch (error) {
     return res.status(500).json({ error: "Something went wrong" });
   }
