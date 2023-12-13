@@ -1,6 +1,6 @@
-const Book = require("../models/books");
+import Book from "../models/books.js";
 
-const getBooks = async (req, res) => {
+export const getBooks = async (req, res) => {
   const { genre } = req.query;
 
   try {
@@ -26,7 +26,7 @@ const getBooks = async (req, res) => {
   }
 };
 
-const getBookById = async (req, res) => {
+export const getBookById = async (req, res) => {
   const { bookId } = req;
   try {
     const book = await Book.findById(bookId);
@@ -42,7 +42,7 @@ const getBookById = async (req, res) => {
   }
 };
 
-const addBook = async (req, res) => {
+export const addBook = async (req, res) => {
   try {
     const book = new Book(req.body);
     console.log(book);
@@ -53,7 +53,7 @@ const addBook = async (req, res) => {
   }
 };
 
-const updateBook = async (req, res) => {
+export const updateBook = async (req, res) => {
   const { bookId } = req;
   try {
     const updatedBook = await Book.findByIdAndUpdate(
@@ -68,7 +68,7 @@ const updateBook = async (req, res) => {
   }
 };
 
-const deleteBook = async (req, res) => {
+export const deleteBook = async (req, res) => {
   const { bookId } = req;
 
   try {
@@ -77,8 +77,4 @@ const deleteBook = async (req, res) => {
   } catch (error) {
     return res.status(500).json({ error: "Something went wrong" });
   }
-};
-
-module.exports = {
-  getBooks, getBookById, addBook, updateBook, deleteBook
 };

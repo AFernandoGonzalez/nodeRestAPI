@@ -1,10 +1,10 @@
-const express = require("express");
-const dotenv = require("dotenv");
-const bodyParser = require("body-parser");
-const rateLimit = require("express-rate-limit");
-const bookRoute = require("./src/routes/bookRoute");
-const userRouter = require("./src/routes/userRoute");
-const connectDB = require("./src/db/db");
+import express from "express";
+import dotenv from "dotenv";
+import bodyParser from "body-parser";
+import rateLimit from "express-rate-limit";
+import bookRoute from "./src/routes/bookRoute.js";
+import userRouter from "./src/routes/userRoute.js";
+import connectDB from "./src/db/db.js";
 
 dotenv.config();
 

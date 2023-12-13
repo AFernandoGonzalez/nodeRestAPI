@@ -1,9 +1,11 @@
-const express = require("express");
-const {
+import express from "express";
+
+import {
   getBooks, getBookById, addBook, updateBook, deleteBook
-} = require("../controllers/bookControllers");
-const extractBookId = require("../middleware/bookMiddleware");
-const authMiddleware = require("../middleware/auth");
+} from "../controllers/bookControllers.js";
+
+import extractBookId from "../middleware/bookMiddleware.js";
+import authMiddleware from "../middleware/auth.js";
 
 const bookRoute = express.Router();
 
@@ -13,4 +15,4 @@ bookRoute.post("/books", authMiddleware, addBook);
 bookRoute.put("/book/:id", authMiddleware, extractBookId, updateBook);
 bookRoute.delete("/book/:id", authMiddleware, extractBookId, deleteBook);
 
-module.exports = bookRoute;
+export default bookRoute;

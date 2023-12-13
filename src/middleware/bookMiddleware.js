@@ -9,4 +9,4 @@ const extractBookId = (req, res, next) => {
   next();
 };
 
-module.exports = extractBookId;
+export default extractBookId;
