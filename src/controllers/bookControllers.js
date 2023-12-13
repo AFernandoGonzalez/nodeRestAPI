@@ -18,9 +18,9 @@ const getBooks = async (req, res) => {
 };
 
 const getBookById = async (req, res) => {
-  const { id } = req.params;
+  const { bookId } = req;
   try {
-    const book = await Book.findById(id);
+    const book = await Book.findById(bookId);
     return res.status(200).json(book);
   } catch (error) {
     return res.status(500).json({ error: "Something went wrong" });
@@ -39,10 +39,10 @@ const addBook = async (req, res) => {
 };
 
 const updateBook = async (req, res) => {
-  const { id } = req.params;
+  const { bookId } = req;
   try {
     const updatedBook = await Book.findByIdAndUpdate(
-      id,
+      bookId,
       req.body,
       { new: true }
     );
@@ -53,6 +53,17 @@ const updateBook = async (req, res) => {
   }
 };
 
+const deleteBook = async (req, res) => {
+  const { bookId } = req;
+
+  try {
+    const deletedBook = await Book.findByIdAndDelete(bookId);
+    return res.status(200).json(deletedBook);
+  } catch (error) {
+    return res.status(500).json({ error: "Something went wrong" });
+  }
+};
+
 module.exports = {
-  getBooks, getBookById, addBook, updateBook
+  getBooks, getBookById, addBook, updateBook, deleteBook
 };
